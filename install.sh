@@ -3,5 +3,5 @@
 Root="/usr/local/mgr5/TinkoffPy"
 
 
-mv *.py $Root
-mv *.xml $Root
+cp ./*.py $Root
+cp ./*.xml $Root
