@@ -1,3 +1,7 @@
 !#/bin/bash
 
-date >> /root/test.txt
+Root="/usr/local/mgr5/TinkoffPy"
+
+
+mv *.py $Root
+mv *.xml $Root
