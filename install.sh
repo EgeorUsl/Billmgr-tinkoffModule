@@ -1,8 +1,9 @@
 !#/bin/bash
 
 
-Root="/usr/local/mgr5/TinkoffPy/"
+Root="/usr/local/mgr5"
 mkdir -p $Root
 
-cp ./*.py $Root
-cp ./*.xml $Root
+cp ./billmgr_mod_testpayment.xml $Root/etc/xml/
+cp ./pmtestpayment.py $Root/paymethods/
+cp ./testpayment.py $Root/cgi/
