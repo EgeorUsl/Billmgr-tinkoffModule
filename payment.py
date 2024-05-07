@@ -7,7 +7,7 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
-#MODULE = 'payment'
+MODULE = 'payment'
 
 def parse_cookies(rawdata):
     from http.cookies import SimpleCookie
@@ -24,10 +24,10 @@ class PaymentStatus(Enum):
     PAID = 4
     FRAUD = 7
     CANCELED = 9
-    payments = billmgr.db.db_query(f'''
-        SELECT p.id AS p_id, p.amount AS p_amount FROM payment p WHERE id = {ID};
-        SELECT * FROM payment WHERE id = {ID};
-    '''
+    # payments = billmgr.db.db_query(f'''
+    #     SELECT p.id AS p_id, p.amount AS p_amount FROM payment p WHERE id = {ID};
+    #     SELECT * FROM payment WHERE id = {ID};
+    # ''')
 
 
 # перевести платеж в статус "оплачивается"
@@ -161,7 +161,19 @@ class PaymentModule(ABC):
     # если платеж оплачен, выставляем соответствующий статус c помощью функции set_paid
     @abstractmethod
     def CheckPay(self):
-        pass
+        logger.info("run checkpay payment")
+
+        # получаем список платежей в статусе оплачивается
+        # и которые используют обработчик pmtestpayment
+        payments = billmgr.db.db_query(f'''
+            SELECT p.id FROM payment p
+            JOIN paymethod pm
+            WHERE module = 'pmtestpayment' AND p.status = {payment.PaymentStatus.INPAY.value}
+        ''')
+
+        for p in payments:
+            logger.info(f"change status for payment {p['id']}")
+            set_paid(p['id'], '', f"external_{p['id']}")
 
     # вызывается для проверки введенных в настройках метода оплаты значений
     # реализация --command pmvalidate
