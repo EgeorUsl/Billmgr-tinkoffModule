@@ -7,7 +7,7 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 
-MODULE = 'payment'
+#MODULE = 'payment'
 
 def parse_cookies(rawdata):
     from http.cookies import SimpleCookie
@@ -24,6 +24,10 @@ class PaymentStatus(Enum):
     PAID = 4
     FRAUD = 7
     CANCELED = 9
+    payments = billmgr.db.db_query(f'''
+        SELECT p.id AS p_id, p.amount AS p_amount FROM payment p WHERE id = {ID};
+        SELECT * FROM payment WHERE id = {ID};
+    '''
 
 
 # перевести платеж в статус "оплачивается"

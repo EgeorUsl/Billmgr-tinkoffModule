@@ -2,7 +2,7 @@
 <mgrdata>
 	<plugin name="pmtestpayment">
 		<group>payment_method</group>
-		<author>BILLmanager team</author>
+		<author>EgorovD</author>
 		<params>
 			<priority lang="ru">3700</priority>
 			<priority lang="en">1800</priority>
